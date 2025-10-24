@@ -1,3 +1,4 @@
+pub mod erk;
 
 pub trait Model {
     fn name(&self) -> &str;
