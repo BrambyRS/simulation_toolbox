@@ -104,7 +104,7 @@ impl ExplicitRK {
                 }
             }
             let t_i: f64 = t + self.c[i] * h;
-            let k_i: Vec<f64> = model.f(&x_temp, u, t_i);
+            let k_i: Vec<f64> = model.fun(&x_temp, u, t_i);
             for xi in 0..n_x {
                 k[i * n_x + xi] = k_i[xi];
             }
@@ -257,14 +257,14 @@ mod tests {
             return 1;
         }
 
-        fn f(&self, x: &Vec<f64>, u: &Vec<f64>, _t: f64) -> Vec<f64> {
+        fn fun(&self, x: &Vec<f64>, u: &Vec<f64>, _t: f64) -> Vec<f64> {
             let mut dxdt: Vec<f64> = vec![0.0; 2];
             dxdt[0] = x[1];
             dxdt[1] = (u[0] - self.c * x[1] - self.k * x[0]) / self.m;
             return dxdt;
         }
 
-        fn j(&self, _x: &Vec<f64>, _u: &Vec<f64>, _t: f64) -> Vec<f64> {
+        fn jac(&self, _x: &Vec<f64>, _u: &Vec<f64>, _t: f64) -> Vec<f64> {
             // Not implemented for this test
             vec![0.0; 4]
         }
